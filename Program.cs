@@ -33,12 +33,24 @@ namespace Heist
 
             }
 
-            Console.WriteLine(AllMembers.Count);
+            int BankDiffLevel = 100;
 
-            foreach (Member memberX in AllMembers)
+            int WholeTeamSkillLevel = 0;
+
+            foreach (var member in AllMembers)
             {
-                Console.WriteLine($"{memberX.Name} has a skill level of {memberX.SkillLevel}, and a courage level of {memberX.Courage}.");
+                WholeTeamSkillLevel += member.SkillLevel;
             }
+
+            if (WholeTeamSkillLevel >= BankDiffLevel)
+            {
+                Console.WriteLine("Success!");
+            }
+            else
+            {
+                Console.WriteLine("You're going to prison");
+            }
+
 
         }
     }
