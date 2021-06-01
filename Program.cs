@@ -7,6 +7,9 @@ namespace Heist
     {
         static void Main()
         {
+            bool replayHeist = true;
+            while (replayHeist)
+            {
             Console.WriteLine("Plan your heist!");
             bool isAddingMembers = true;
             List<Member> AllMembers = new List<Member>();
@@ -33,9 +36,20 @@ namespace Heist
 
             }
 
+            Console.WriteLine("How many trial runs? ");
+
+            int trialRuns = int.Parse(Console.ReadLine());
+
             int BankDiffLevel = 100;
 
             int WholeTeamSkillLevel = 0;
+
+            for (int x = trialRuns; x > 0; x-- )
+            {
+
+            WholeTeamSkillLevel = 0;
+
+            BankDiffLevel = 100;
 
             foreach (var member in AllMembers)
             {
@@ -44,10 +58,23 @@ namespace Heist
 
             int luck = new Random().Next(-10, 11);
 
+            Console.WriteLine(luck);
+
             BankDiffLevel += luck;
 
             Console.WriteLine($"The team's combined skill level is {WholeTeamSkillLevel}");
             Console.WriteLine($"The team's bank difficulty level is {BankDiffLevel}");
+
+            if (WholeTeamSkillLevel >= BankDiffLevel)
+            {
+                Console.WriteLine("Trial succeeded");
+            }
+            else 
+            {
+                Console.WriteLine("Trial failed");
+            }
+
+            }
 
             if (WholeTeamSkillLevel >= BankDiffLevel)
             {
@@ -58,6 +85,22 @@ namespace Heist
                 Console.WriteLine("You're going to prison");
             }
 
+            Console.WriteLine("Would you like to play again? (Y/N): ");
+
+            string replayAnswer = Console.ReadLine().ToLower();
+
+            if (replayAnswer == "y")
+            {
+                Console.Clear();
+                Console.WriteLine("Restarting");
+            }
+            else 
+            {
+                Console.WriteLine("Thanks for playing!");
+                Environment.Exit(0);
+            }
+
+        }
         }
     }
 }
