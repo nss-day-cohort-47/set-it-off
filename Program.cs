@@ -42,6 +42,13 @@ namespace Heist
                 WholeTeamSkillLevel += member.SkillLevel;
             }
 
+            int luck = new Random().Next(-10, 11);
+
+            BankDiffLevel += luck;
+
+            Console.WriteLine($"The team's combined skill level is {WholeTeamSkillLevel}");
+            Console.WriteLine($"The team's bank difficulty level is {BankDiffLevel}");
+
             if (WholeTeamSkillLevel >= BankDiffLevel)
             {
                 Console.WriteLine("Success!");
@@ -50,7 +57,6 @@ namespace Heist
             {
                 Console.WriteLine("You're going to prison");
             }
-
 
         }
     }
