@@ -90,6 +90,21 @@ namespace Heist
                 string doRealHeist = Console.ReadLine().ToLower();
                 if (doRealHeist == "y")
                 {
+                    WholeTeamSkillLevel = 0;
+
+                    BankDiffLevel = DifficultyInput;
+
+                    foreach (var member in AllMembers)
+                    {
+                        WholeTeamSkillLevel += member.SkillLevel;
+                    }
+
+                    int luck = new Random().Next(-10, 11);
+
+                    Console.WriteLine();
+
+                    BankDiffLevel += luck;
+
                     if (WholeTeamSkillLevel >= BankDiffLevel)
                     {
                         Console.WriteLine("Your Heist Was A Success!");
