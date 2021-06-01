@@ -14,7 +14,15 @@ namespace Heist
                 bool isAddingMembers = true;
                 List<Member> AllMembers = new List<Member>();
                 Console.Write("Set the bank's difficulty level: ");
-                int DifficultyInput = int.Parse(Console.ReadLine());
+                int DifficultyInput = 100;
+                try
+                {
+                    DifficultyInput = int.Parse(Console.ReadLine());
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Invalid input, the difficulty level default value will be 100.");
+                }
                 while (isAddingMembers)
                 {
                     Console.Write("Enter a team member's name: ");
@@ -27,10 +35,27 @@ namespace Heist
                     }
 
                     Console.Write("What is the team member's skill level? ");
-                    int Skill = int.Parse(Console.ReadLine());
+                    int Skill = 10;
+                    try
+                    {
+                        Skill = int.Parse(Console.ReadLine());
+                    }
+                    catch (FormatException)
+                    {
+                        Console.WriteLine("Invalid input, the skill level default value will be 10.");
+                    }
+
 
                     Console.Write("What is the team member's courage level? ");
-                    double Courage = double.Parse(Console.ReadLine());
+                    double Courage = 5.0;
+                    try
+                    {
+                        Courage = double.Parse(Console.ReadLine());
+                    }
+                    catch (FormatException)
+                    {
+                        Console.WriteLine("Invalid input, the courage level default value will be 5.0");
+                    }
 
                     Member varMember = new Member(MemberName, Skill, Courage);
 
@@ -39,8 +64,17 @@ namespace Heist
                 }
 
                 Console.WriteLine("How many trial runs? ");
+                int trialRuns = 5;
+                try
+                {
+                    trialRuns = int.Parse(Console.ReadLine());
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Invalid input, the default number of trial runs will be 5.");
+                }
 
-                int trialRuns = int.Parse(Console.ReadLine());
+
 
                 int BankDiffLevel = DifficultyInput;
 
@@ -71,6 +105,14 @@ namespace Heist
                     Console.WriteLine($"The team's combined skill level is {WholeTeamSkillLevel}");
                     Console.WriteLine($"The team's bank difficulty level is {BankDiffLevel}");
 
+                    foreach (var member in AllMembers)
+                    {
+                        if (member.Courage < 5.0)
+                        {
+                            Console.WriteLine($"{member.Name} doesn't seem courageous enough for this job.");
+                        }
+                    }
+
                     if (WholeTeamSkillLevel >= BankDiffLevel)
                     {
                         Console.WriteLine("Trial succeeded");
@@ -85,6 +127,7 @@ namespace Heist
                 }
                 Console.WriteLine();
                 Console.WriteLine($"You had {SuccessfulTrials} successes, and {FailedTrials} failures.");
+                Console.WriteLine($"Your chances of success are {SuccessfulTrials * 100 / (SuccessfulTrials + FailedTrials)}% as long as no one gets caught.");
                 Console.WriteLine();
                 Console.WriteLine("You have seen the trial runs. Would you like to try the real thing? (Y/N)");
                 string doRealHeist = Console.ReadLine().ToLower();
@@ -96,8 +139,18 @@ namespace Heist
 
                     foreach (var member in AllMembers)
                     {
+                        if (member.Courage < 5.0)
+                        {
+                            Console.WriteLine($"{member.Name} was caught.");
+                            member.SkillLevel = 0;
+                        }
+                    }
+
+                    foreach (var member in AllMembers)
+                    {
                         WholeTeamSkillLevel += member.SkillLevel;
                     }
+
 
                     int luck = new Random().Next(-10, 11);
 
